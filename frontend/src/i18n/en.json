@@ -9,7 +9,7 @@
   "kpi.activeIncidents": "Active Incidents",
   "kpi.closedTunnels": "Tunnel Closures",
   "kpi.temperature": "Temperature",
-  "kpi.precipitation": "Precipitation 24h",
+  "kpi.precipitation": "Precipitation now",
   "kpi.risk.high": "High risk",
   "kpi.risk.moderate": "Moderate risk",
   "kpi.risk.low": "Low risk",
