@@ -10,10 +10,11 @@
 
 Fleet operators, construction site managers, and infrastructure dispatchers in Bergen deal with the same problem every shift: weather and traffic data live in separate systems, and synthesising them into a routing decision takes time they don't have. **weather_traffic** pulls live weather from MET Norway and traffic incidents from Statens vegvesen, stores both in a time-series database, and feeds them to a Claude-powered AI analyst that produces a 30-second operational briefing — in Norwegian or English, with a calibrated confidence score.
 
-> [Screenshot of dashboard goes here — docs/screenshots/dashboard.png]
+![Bergen Operations Dashboard](docs/screenshots/dashboard.png)
 
-**Live demo:** [URL pending — Render deployment in progress]  
-The dashboard requires the backend. See [Setup](#setup) below.
+**Live demo:** **https://wt-bergen.onrender.com** 🚀
+
+> ⚠️ First request may take ~50 seconds — Render's free tier puts the backend to sleep after 15 minutes of inactivity. Subsequent requests are instant. The dashboard requires the backend. See [Setup](#setup) below.
 
 ---
 
