@@ -15,7 +15,7 @@ services:
   # 1. Backend — FastAPI Web Service
   # ───────────────────────────────────────────────────────────────────────────
   - type: web
-    name: weather-traffic-api
+    name: wt-bergen-api
     env: python
     region: frankfurt
     plan: free
@@ -40,7 +40,7 @@ services:
       # If "weather-traffic" is taken, Render appends a suffix — check the dashboard.
       # Update this value and redeploy after Step 5 (DEPLOY.md).
       - key: CORS_ORIGINS
-        value: '["https://weather-traffic.onrender.com"]'
+        value: '["https://wt-bergen.onrender.com"]'
 
       # ── Application ────────────────────────────────────────────────────────
       - key: DATABASE_URL
@@ -56,7 +56,7 @@ services:
   # 2. Frontend — Astro Static Site
   # ───────────────────────────────────────────────────────────────────────────
   - type: web
-    name: weather-traffic
+    name: wt-bergen
     env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
@@ -65,7 +65,7 @@ services:
       # PUBLIC_BACKEND_URL is baked into the Astro build at compile time.
       # Update to the actual backend URL and redeploy after Step 5 (DEPLOY.md).
       - key: PUBLIC_BACKEND_URL
-        value: https://weather-traffic-api.onrender.com
+        value: https://wt-bergen-api.onrender.com
     routes:
       - type: rewrite
         source: /*

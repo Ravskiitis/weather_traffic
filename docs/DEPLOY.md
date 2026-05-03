@@ -5,8 +5,8 @@ This document covers deploying weather_traffic to [Render](https://render.com) u
 
 | Service | Type | URL pattern |
 |---|---|---|
-| `weather-traffic-api` | Web Service (Python, free) | `https://weather-traffic-api.onrender.com` |
-| `weather-traffic` | Static Site (free) | `https://weather-traffic.onrender.com` |
+| `wt-bergen-api` | Web Service (Python, free) | `https://wt-bergen-api.onrender.com` |
+| `wt-bergen` | Static Site (free) | `https://wt-bergen.onrender.com` |
 
 > **Actual URLs may differ** if the service names are already taken on Render. Confirm in the dashboard after Step 3.
 
@@ -39,7 +39,7 @@ Watch the build logs in the Render dashboard. The backend build installs Python 
 the frontend build runs `npm install && npm run build`. Both must reach **Live** status.
 
 ### Step 4 — Set ANTHROPIC_API_KEY (required before the AI agent works)
-Render dashboard → **weather-traffic-api** → **Environment** → add:
+Render dashboard → **wt-bergen-api** → **Environment** → add:
 
 | Key | Value |
 |---|---|
@@ -48,8 +48,8 @@ Render dashboard → **weather-traffic-api** → **Environment** → add:
 Click **Save Changes** — Render will redeploy the backend automatically.
 
 ### Step 5 — Confirm both services are live
-- Backend health: `https://weather-traffic-api.onrender.com/api/health` → `{"status":"ok"}`
-- Frontend: `https://weather-traffic.onrender.com` → dashboard loads (AI report button works once backend is warm)
+- Backend health: `https://wt-bergen-api.onrender.com/api/health` → `{"status":"ok"}`
+- Frontend: `https://wt-bergen.onrender.com` → dashboard loads (AI report button works once backend is warm)
 
 ---
 
@@ -61,7 +61,7 @@ real URLs are known.
 
 **6a. Update CORS on the backend**
 
-Render dashboard → **weather-traffic-api** → **Environment** → update:
+Render dashboard → **wt-bergen-api** → **Environment** → update:
 
 ```
 CORS_ORIGINS = ["https://your-actual-frontend-url.onrender.com"]
@@ -118,7 +118,7 @@ Render dashboard → service → **Manual Deploy** → **Deploy latest commit**.
 | Backend build fails: `ModuleNotFoundError: No module named 'app'` | `pip install -e .` failed | Check build logs; ensure `rootDir: backend` in render.yaml |
 | `422 Unprocessable Entity` on CORS_ORIGINS | Value is not valid JSON | Ensure it is `'["https://..."]'` — double quotes inside single quotes |
 | Frontend shows "Failed to load data" | Backend is cold-starting or `PUBLIC_BACKEND_URL` is wrong | Wait 60 s and retry; confirm the URL in backend service logs |
-| AI report returns `{"confidence": 0.0, ...}` | `ANTHROPIC_API_KEY` not set or invalid | Set the key in Render dashboard → weather-traffic-api → Environment |
+| AI report returns `{"confidence": 0.0, ...}` | `ANTHROPIC_API_KEY` not set or invalid | Set the key in Render dashboard → wt-bergen-api → Environment |
 | `CORS Missing Allow Origin` in browser | Frontend URL not in `CORS_ORIGINS` | Update env var (Step 6a) and redeploy backend |
 | Service URL ends with `-abc123` suffix | Default name was already taken on Render | Use the Render-assigned URL everywhere; update Step 6 accordingly |
 
