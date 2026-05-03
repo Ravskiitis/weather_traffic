@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel
 
+from app.api.traffic import router as traffic_router
 from app.api.weather import router as weather_router
 from app.core.config import settings
 from app.db.session import engine
@@ -47,6 +48,7 @@ app.add_middleware(
 
 
 app.include_router(weather_router, prefix="/api")
+app.include_router(traffic_router, prefix="/api")
 
 
 @app.get("/api/health")

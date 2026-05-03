@@ -54,6 +54,7 @@ weather_traffic/
 - **Language of UI:** Norwegian (bokmål) and English, switchable. All user-facing strings live in i18n files, never hardcoded in components.
 - **Commits:** Conventional Commits (\`feat:\`, \`fix:\`, \`docs:\`, \`chore:\`, \`refactor:\`). One logical change per commit.
 - **No secrets in code, ever.** All keys via environment variables loaded from \`.env\`.
+- **Vegvesen Datex II:** Requires HTTP Basic Auth (`VEGVESEN_USERNAME` / `VEGVESEN_PASSWORD`); incident descriptions must be displayed in Norwegian as-is (no translation); any UI showing this data must display "Statens vegvesen / NPRA" as the data source.
 
 ### Python (backend)
 - Format with \`ruff format\`. Lint with \`ruff check\`.

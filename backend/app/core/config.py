@@ -18,6 +18,10 @@ class Settings(BaseSettings):
     # Frontend (used for CORS and internal links)
     public_backend_url: str = "http://localhost:8000"
 
+    # Statens vegvesen — Datex II (HTTP Basic Auth; register at vegvesen.no)
+    vegvesen_username: str = ""
+    vegvesen_password: str = ""
+
     # Application
     data_region: str = "bergen"
     default_language: str = "en"
