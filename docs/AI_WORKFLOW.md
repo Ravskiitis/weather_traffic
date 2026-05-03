@@ -18,7 +18,30 @@ This is a living document describing how AI tools are used in the development of
 
 ## Notable prompts and iterations
 
-To be appended as the project progresses. Each entry: date, sub-agent, what was attempted, what worked, what didn't.
+### Session 1 — 2026-05-03 — Foundation
+
+**What was attempted:**
+Bootstrapping the entire project from zero — repo connection, project context (CLAUDE.md), three sub-agent definitions, documentation skeleton, design handoff from Claude Design, backend skeleton (FastAPI + config + health endpoint), and the database schema.
+
+**Approach:**
+Strict separation between strategic conversation (Claude web) and execution (Claude Code on the Raspberry Pi). All structural files (CLAUDE.md, sub-agents, docs, .gitignore) were authored before any application code. Claude Code received the orientation prompt first and summarised the project back; only after the summary matched expectations did implementation begin.
+
+**Models:**
+Started with Claude Opus 4.7 (default for Max account). Switched to Sonnet 4.6 for routine implementation work after the orientation step — the structured CLAUDE.md and sub-agent files made Sonnet sufficient for boilerplate and structural tasks.
+
+**What worked:**
+- Forcing an orientation step ("read everything, summarise, don't write anything") before implementation — Sonnet's summary matched the spec almost line-for-line, which validated the up-front investment in CLAUDE.md.
+- Acting as a named sub-agent in the prompt ("Acting as the data-collector sub-agent...") gave focused, in-scope output.
+- "Show me the file contents, don't run the smoke test" stopped Claude Code from over-reaching past the prompt.
+
+**What didn't work / had to be corrected:**
+- The initial `.gitignore` had a too-broad `data/` rule that silently excluded `backend/app/data/__init__.py`. Caught by `git check-ignore -v`. Narrowed to `backend/data/`.
+- Heredoc with triple-backticks confused bash; switched to `nano` for files containing markdown code fences.
+
+**Lessons:**
+- Always verify what git is *not* committing, not just what it is.
+- Prefer `nano` over heredoc when authoring markdown that contains code blocks.
+- Sub-agent files pay for themselves on the very first implementation prompt.
 
 ## Lessons learned
 
