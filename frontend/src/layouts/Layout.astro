@@ -24,6 +24,14 @@ const { title = 'Dashboard', lang = 'en' } = Astro.props;
   </head>
 
   <style is:global>
+    /* Keep Leaflet map layers (panes, controls, attribution) below sticky nav */
+    .leaflet-pane,
+    .leaflet-top,
+    .leaflet-bottom,
+    .leaflet-control {
+      z-index: 0 !important;
+    }
+
     @media print {
       @page {
         size: A4 portrait;
