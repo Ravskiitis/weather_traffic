@@ -40,8 +40,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    # Astro dev server; extend for production origin once known
-    allow_origins=["http://localhost:4321"],
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

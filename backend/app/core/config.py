@@ -18,6 +18,14 @@ class Settings(BaseSettings):
     # Frontend (used for CORS and internal links)
     public_backend_url: str = "http://localhost:8000"
 
+    # CORS — production should override via .env, e.g.:
+    # CORS_ORIGINS=["https://wt.example.com"]
+    cors_origins: list[str] = [
+        "http://localhost:4321",
+        "http://192.168.50.10:4321",
+        "http://192.168.50.9:4321",
+    ]
+
     # Statens vegvesen — Datex II (HTTP Basic Auth; register at vegvesen.no)
     vegvesen_username: str = ""
     vegvesen_password: str = ""
