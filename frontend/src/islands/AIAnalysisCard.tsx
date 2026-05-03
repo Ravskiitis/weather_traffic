@@ -93,8 +93,16 @@ export default function AIAnalysisCard({ lang, report, loading, onRegenerate }: 
 
   const locale = lang === 'no' ? 'nb-NO' : 'en-GB';
   const formattedDate = report
-    ? new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(
-        new Date(report.generated_at),
+    ? new Intl.DateTimeFormat(locale, {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+        timeZone: 'Europe/Oslo',
+      }).format(
+        new Date(
+          report.generated_at.endsWith('Z')
+            ? report.generated_at
+            : report.generated_at + 'Z',
+        ),
       )
     : null;
 
