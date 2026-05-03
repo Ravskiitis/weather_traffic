@@ -11,7 +11,14 @@ Reference for all external APIs consumed by the application.
 - **License:** Norwegian Licence for Open Government Data (NLOD), CC BY 4.0
 - **Rate limits:** Be polite. Respect the Expires response header — do not poll faster than that. Cache aggressively.
 - **Used for:** Current weather and short-term forecast at Bergen sentrum (Florida weather station coordinates).
-- **Notes:** to be filled in by data-collector as findings emerge.
+- **Endpoint (with params):** `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=60.39&lon=5.32`
+- **Payload paths used:**
+  - `properties.meta.updated_at` → snapshot `timestamp` (ISO 8601, UTC/Z — strip tzinfo for SQLite)
+  - `properties.timeseries[0].data.instant.details` → temperature, wind speed/direction, humidity, pressure
+  - `properties.timeseries[0].data.next_1_hours.summary.symbol_code` → `weather_symbol` (e.g. `"heavyrain"`)
+  - `properties.timeseries[0].data.next_1_hours.details.precipitation_amount` → `precipitation_mm_h`
+- **Known gaps:** The compact endpoint does not include apparent temperature ("feels like"). `feels_like_c` is always `None` from this source. `next_1_hours` may be absent for the furthest-future timeseries entries; always check for None before accessing.
+- **Datetime note:** All datetimes arrive timezone-aware (UTC, "Z" suffix). Strip tzinfo before persisting — SQLite stores naive UTC throughout this project.
 
 ## Statens vegvesen — Datex II
 
