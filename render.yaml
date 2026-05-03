@@ -1,0 +1,73 @@
+# render.yaml — Render Blueprint for weather_traffic
+# Deploys two services from this monorepo:
+#   weather-traffic-api  — FastAPI backend  (Web Service,  free tier, frankfurt)
+#   weather-traffic      — Astro frontend   (Static Site,  free tier, frankfurt)
+#
+# See docs/DEPLOY.md for step-by-step instructions.
+#
+# ⚠️  PLACEHOLDER URLS — update after first deploy (DEPLOY.md Step 6):
+#   CORS_ORIGINS      → set to your actual frontend Render URL
+#   PUBLIC_BACKEND_URL → set to your actual backend Render URL
+
+services:
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # 1. Backend — FastAPI Web Service
+  # ───────────────────────────────────────────────────────────────────────────
+  - type: web
+    name: weather-traffic-api
+    env: python
+    region: frankfurt
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -e .
+    # mkdir -p data  — SQLite needs the directory; Render's FS starts empty
+    # seed_demo.py   — idempotent; safe to run on every cold start
+    startCommand: "mkdir -p data && python scripts/seed_demo.py && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /api/health
+    envVars:
+      # ── Secrets: set in the Render dashboard, never committed ──────────────
+      - key: ANTHROPIC_API_KEY
+        sync: false               # required — set via Render UI before first deploy
+
+      - key: VEGVESEN_USERNAME
+        sync: false               # leave blank until Statens vegvesen credentials arrive
+      - key: VEGVESEN_PASSWORD
+        sync: false
+
+      # ── CORS ──────────────────────────────────────────────────────────────
+      # Render generates the frontend URL as https://{name}.onrender.com.
+      # If "weather-traffic" is taken, Render appends a suffix — check the dashboard.
+      # Update this value and redeploy after Step 5 (DEPLOY.md).
+      - key: CORS_ORIGINS
+        value: '["https://weather-traffic.onrender.com"]'
+
+      # ── Application ────────────────────────────────────────────────────────
+      - key: DATABASE_URL
+        value: sqlite:///./data/weather_traffic.db
+
+      - key: MET_USER_AGENT
+        value: weather_traffic/0.1 (https://github.com/Ravskiitis/weather_traffic)
+
+      - key: LOG_LEVEL
+        value: info
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # 2. Frontend — Astro Static Site
+  # ───────────────────────────────────────────────────────────────────────────
+  - type: web
+    name: weather-traffic
+    env: static
+    region: frankfurt
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      # PUBLIC_BACKEND_URL is baked into the Astro build at compile time.
+      # Update to the actual backend URL and redeploy after Step 5 (DEPLOY.md).
+      - key: PUBLIC_BACKEND_URL
+        value: https://weather-traffic-api.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
