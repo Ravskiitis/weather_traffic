@@ -58,7 +58,6 @@ services:
   - type: web
     name: weather-traffic
     env: static
-    region: frankfurt
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
