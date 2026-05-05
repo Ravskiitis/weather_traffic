@@ -22,8 +22,7 @@ services:
     rootDir: backend
     buildCommand: pip install -e .
     # mkdir -p data  — SQLite needs the directory; Render's FS starts empty
-    # seed_demo.py   — idempotent; safe to run on every cold start
-    startCommand: "mkdir -p data && python scripts/seed_demo.py && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    startCommand: "mkdir -p data && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     healthCheckPath: /api/health
     envVars:
       # ── Secrets: set in the Render dashboard, never committed ──────────────
@@ -31,7 +30,7 @@ services:
         sync: false               # required — set via Render UI before first deploy
 
       - key: VEGVESEN_USERNAME
-        sync: false               # leave blank until Statens vegvesen credentials arrive
+        sync: false               # required — set via Render UI before first deploy
       - key: VEGVESEN_PASSWORD
         sync: false
 
