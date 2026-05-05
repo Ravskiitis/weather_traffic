@@ -29,6 +29,7 @@ class Settings(BaseSettings):
     # Statens vegvesen — Datex II (HTTP Basic Auth; register at vegvesen.no)
     vegvesen_username: str = ""
     vegvesen_password: str = ""
+    vegvesen_fetch_interval_seconds: int = 900
 
     # Application
     data_region: str = "bergen"
