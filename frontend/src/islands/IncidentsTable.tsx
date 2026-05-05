@@ -20,12 +20,14 @@ const SEVERITY_KEYS: Record<IncidentSeverity, I18nKey> = {
 };
 
 const STATUS_STYLES: Record<IncidentStatus, string> = {
+  scheduled: 'bg-amber-50 text-amber-700', 
   active: 'bg-brand-orange/10 text-brand-orange',
   monitoring: 'bg-blue-100 text-blue-700',
   closed: 'bg-brand-light text-brand-mid',
 };
 
 const STATUS_KEYS: Record<IncidentStatus, I18nKey> = {
+  scheduled: 'status.scheduled', 
   active: 'status.active',
   monitoring: 'status.monitoring',
   closed: 'status.closed',

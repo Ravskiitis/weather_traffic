@@ -13,6 +13,7 @@ class IncidentSeverity(str, enum.Enum):
 
 
 class IncidentStatus(str, enum.Enum):
+    scheduled = "scheduled"
     active = "active"
     monitoring = "monitoring"
     closed = "closed"

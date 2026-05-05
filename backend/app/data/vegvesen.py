@@ -260,6 +260,8 @@ def _to_traffic_incident(raw: _RawSituation, fetched_at: datetime) -> TrafficInc
 
     if raw.ended_at is not None and raw.ended_at < now:
         status = IncidentStatus.closed
+    elif started_at > now:
+        status = IncidentStatus.scheduled
     else:
         status = IncidentStatus.active
 

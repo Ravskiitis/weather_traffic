@@ -42,7 +42,7 @@ export interface WeatherSnapshot {
 }
 
 export type IncidentSeverity = 'low' | 'medium' | 'high';
-export type IncidentStatus = 'active' | 'monitoring' | 'closed';
+export type IncidentStatus = 'scheduled' | 'active' | 'monitoring' | 'closed';
 export type IncidentType = 'accident' | 'tunnel_closure' | 'roadworks' | 'wind_warning' | 'other';
 
 export interface TrafficIncident {

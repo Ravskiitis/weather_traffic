@@ -67,6 +67,7 @@
   "status.active": "Active",
   "status.monitoring": "Monitoring",
   "status.closed": "Closed",
+  "status.scheduled": "Scheduled",
   "footer.attribution": "Data: MET Norway · Statens vegvesen / NPRA",
   "loading": "Loading…",
   "error.fetch": "Failed to load data."
